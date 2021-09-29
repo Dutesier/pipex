@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getfd.c                                         :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dareias- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/29 10:47:18 by dareias-          #+#    #+#             */
-/*   Updated: 2021/09/29 17:25:40 by dareias-         ###   ########.fr       */
+/*   Created: 2021/09/29 12:18:00 by dareias-          #+#    #+#             */
+/*   Updated: 2021/09/29 12:18:06 by dareias-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_pipex.h"
 
-int	ft_getfd(char *filename, int type)
+static void	ft_putchar_fd(char c, int fd)
 {
-	if (type == 1)
-	{
-		if (access(filename, F_OK))
-		{
-			ft_putstr_fd("pipex: ", STDERR_FILENO);
-			ft_putstr_fd(filename, STDERR_FILENO);
-			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			return(-1);
-		}
-		return (open(filename, O_RDONLY));
-	}
-	else
-		return (open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644));
+	write(fd, &c, 1);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	while (*s)
+		ft_putchar_fd(*s++, fd);
 }

@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_getfd.c                                         :+:      :+:    :+:   */
+/*   ft_cleaner.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dareias- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/29 10:47:18 by dareias-          #+#    #+#             */
-/*   Updated: 2021/09/29 17:25:40 by dareias-         ###   ########.fr       */
+/*   Created: 2021/09/29 17:57:40 by dareias-          #+#    #+#             */
+/*   Updated: 2021/09/29 18:03:10 by dareias-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_pipex.h"
 
-int	ft_getfd(char *filename, int type)
+void ft_clean_ss(char **ss)
 {
-	if (type == 1)
+	int i;
+
+	i = 0;
+	while (ss[i])
 	{
-		if (access(filename, F_OK))
-		{
-			ft_putstr_fd("pipex: ", STDERR_FILENO);
-			ft_putstr_fd(filename, STDERR_FILENO);
-			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			return(-1);
-		}
-		return (open(filename, O_RDONLY));
+		free(ss[i]);
+		i++;
 	}
-	else
-		return (open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644));
+	free(ss);
 }
